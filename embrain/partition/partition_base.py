@@ -33,11 +33,13 @@ class PartitionBase:
     def _get_number_of_nodes_from_board(self):
         # 1. push exe file to board 
         self._copy_file_to_board(self.exe_path, self.board_path)
-        # 2. run model inference with random parameter settings 
-        cmd = f"""sshpass -p khadas ssh root@{self.board_ip_addr}; 
-        cd {self.board_path}; 
-        export LD_LIBRARY_PATH={self.board_path};
-    	./{os.path.basename(self.exe_path)} --threads=4 --threads2=2 --n=1 --total_cores=6 partition_point=2 partition_point2=6 --order=B-L-G > {self.board_path}/${os.path.basename(self.exe_path)}.log;"""
+        # 2. run model inference with random parameter settings
+        shell_script_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'shell', 'khadas_armcl_test.sh')
+        
+        # cmd = f"""sshpass -p khadas ssh root@{self.board_ip_addr};
+        # cd {self.board_path}; 
+        # export LD_LIBRARY_PATH={self.board_path};
+    	# ./{os.path.basename(self.exe_path)} --threads=4 --threads2=2 --n=1 --total_cores=6 partition_point=2 partition_point2=6 --order=B-L-G > {self.board_path}/${os.path.basename(self.exe_path)}.log;"""
 
     def _brute_force_search(self):
         pass
